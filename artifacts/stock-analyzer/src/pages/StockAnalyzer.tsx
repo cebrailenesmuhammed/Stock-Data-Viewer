@@ -312,7 +312,7 @@ function WatchlistSidebar({ watchlist, onAnalyze, onRemove }: {
 
 // ── Main Component ────────────────────────────────────────────────────────
 export default function StockAnalyzer() {
-  const { user, isLoading: authLoading, isAuthenticated, login, logout } = useAuth();
+  const { user, isLoading: authLoading, isAuthenticated, login, register, logout } = useAuth();
   const [input, setInput] = useState("");
   const [loadStep, setLoadStep] = useState<LoadStep>("idle");
   const [data, setData] = useState<StockData | null>(null);
@@ -468,14 +468,24 @@ export default function StockAnalyzer() {
                   </button>
                 </div>
               ) : (
-                <button
-                  onClick={login}
-                  style={{ background: "hsl(217 91% 60%)", color: "white", border: "none", borderRadius: 10, padding: "8px 18px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", transition: "background 0.2s" }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "hsl(217 91% 50%)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "hsl(217 91% 60%)"; }}
-                >
-                  Giris Yap / Kayit Ol
-                </button>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <button
+                    onClick={login}
+                    style={{ background: "hsl(222 40% 10%)", color: "hsl(210 40% 90%)", border: "1px solid hsl(222 30% 22%)", borderRadius: 10, padding: "8px 18px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s" }}
+                    onMouseEnter={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.borderColor = "hsl(217 91% 60%)"; el.style.color = "hsl(217 91% 65%)"; }}
+                    onMouseLeave={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.borderColor = "hsl(222 30% 22%)"; el.style.color = "hsl(210 40% 90%)"; }}
+                  >
+                    Giris Yap
+                  </button>
+                  <button
+                    onClick={register}
+                    style={{ background: "hsl(217 91% 60%)", color: "white", border: "none", borderRadius: 10, padding: "8px 18px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", transition: "background 0.2s" }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "hsl(217 91% 50%)"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "hsl(217 91% 60%)"; }}
+                  >
+                    Kayit Ol
+                  </button>
+                </div>
               )
             )}
           </div>

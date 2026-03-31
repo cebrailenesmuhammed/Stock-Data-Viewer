@@ -90,10 +90,9 @@ router.get("/auth/user", (req: Request, res: Response) => {
   );
 });
 
-router.get("/login", async (req: Request, res: Response) => {
+async function startAuthFlow(req: Request, res: Response, prompt: string) {
   const config = await getOidcConfig();
   const callbackUrl = `${getOrigin(req)}/api/callback`;
-
   const returnTo = getSafeReturnTo(req.query.returnTo);
 
   const state = oidc.randomState();
@@ -106,7 +105,7 @@ router.get("/login", async (req: Request, res: Response) => {
     scope: "openid email profile offline_access",
     code_challenge: codeChallenge,
     code_challenge_method: "S256",
-    prompt: "login consent",
+    prompt,
     state,
     nonce,
   });
@@ -117,6 +116,14 @@ router.get("/login", async (req: Request, res: Response) => {
   setOidcCookie(res, "return_to", returnTo);
 
   res.redirect(redirectTo.href);
+}
+
+router.get("/login", async (req: Request, res: Response) => {
+  await startAuthFlow(req, res, "login consent");
+});
+
+router.get("/register", async (req: Request, res: Response) => {
+  await startAuthFlow(req, res, "create consent");
 });
 
 // Query params are not validated because the OIDC provider may include
