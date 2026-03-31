@@ -310,39 +310,6 @@ function WatchlistSidebar({ watchlist, onAnalyze, onRemove }: {
   );
 }
 
-// ── Auth Banner ───────────────────────────────────────────────────────────
-function AuthBanner({ onLogin }: { onLogin: () => void }) {
-  return (
-    <div style={{
-      background: "linear-gradient(135deg, rgba(59,130,246,0.08), rgba(59,130,246,0.03))",
-      border: "1px solid rgba(59,130,246,0.2)",
-      borderRadius: 16, padding: "20px 24px",
-      display: "flex", alignItems: "center", justifyContent: "space-between",
-      flexWrap: "wrap", gap: 16,
-    }}>
-      <div>
-        <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 4 }}>Takip Listesi Ozelligi</div>
-        <div style={{ fontSize: 13, color: "hsl(215 20% 55%)" }}>
-          Begendigniz hisseleri kaydetmek ve takip listesi olusturmak icin giris yapin.
-        </div>
-      </div>
-      <button
-        onClick={onLogin}
-        style={{
-          background: "hsl(217 91% 60%)", color: "white", border: "none",
-          borderRadius: 10, padding: "10px 22px", fontSize: 14, fontWeight: 600,
-          cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap",
-          transition: "background 0.2s",
-        }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "hsl(217 91% 50%)"; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "hsl(217 91% 60%)"; }}
-      >
-        Giris Yap
-      </button>
-    </div>
-  );
-}
-
 // ── Main Component ────────────────────────────────────────────────────────
 export default function StockAnalyzer() {
   const { user, isLoading: authLoading, isAuthenticated, login, logout } = useAuth();
@@ -597,12 +564,6 @@ export default function StockAnalyzer() {
             ))}
           </div>
         </form>
-
-        {!isAuthenticated && !authLoading && (
-          <div style={{ maxWidth: 640, margin: "0 auto 32px" }}>
-            <AuthBanner onLogin={login} />
-          </div>
-        )}
 
         {isLoading && (
           <div className="fade-up" style={{ maxWidth: 640, margin: "0 auto 48px", background: "hsl(222 40% 8%)", border: "1px solid hsl(222 30% 14%)", borderRadius: 20, padding: 28 }}>
