@@ -474,7 +474,7 @@ export default function StockAnalyzer() {
                   onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "hsl(217 91% 50%)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "hsl(217 91% 60%)"; }}
                 >
-                  Giris Yap
+                  Giris Yap / Kayit Ol
                 </button>
               )
             )}
