@@ -413,75 +413,197 @@ export default function StockAnalyzer() {
       <TickerBar />
 
       {/* ── NAV ── */}
-      <nav style={{ position: "sticky", top: 0, zIndex: 100, background: "rgba(7,9,26,0.88)", backdropFilter: "blur(20px)", borderBottom: "1px solid hsl(222 30% 14%)", padding: "0 24px" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: "hsl(217 91% 60%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <nav style={{
+        position: "sticky", top: 0, zIndex: 100,
+        background: "rgba(4, 6, 20, 0.72)",
+        backdropFilter: "blur(24px) saturate(180%)",
+        WebkitBackdropFilter: "blur(24px) saturate(180%)",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+        padding: "0 32px",
+        boxShadow: "0 1px 40px rgba(0,0,0,0.4)",
+      }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
+
+          {/* Logo */}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, cursor: "default", userSelect: "none" }}>
+            <div style={{
+              width: 36, height: 36, borderRadius: 10,
+              background: "linear-gradient(135deg, hsl(217 91% 55%), hsl(230 80% 65%))",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 2px 12px rgba(59,130,246,0.35)",
+              flexShrink: 0,
+            }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
                 <polyline points="16 7 22 7 22 13" />
               </svg>
             </div>
-            <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, fontWeight: 700 }}>
-              Hisse<span style={{ color: "hsl(217 91% 60%)" }}>Analiz</span>
-            </span>
+            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 19, fontWeight: 700, letterSpacing: "-0.01em" }}>
+                Hisse<span style={{ background: "linear-gradient(90deg, hsl(217 91% 65%), hsl(195 90% 60%))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Analiz</span>
+              </span>
+              <span style={{ fontSize: 9.5, letterSpacing: "0.18em", textTransform: "uppercase", color: "hsl(215 20% 42%)", fontWeight: 500, marginTop: 1 }}>Canli Borsa Analizi</span>
+            </div>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          {/* Right side */}
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             {isAuthenticated && (
               <button
                 onClick={() => setShowWatchlist((v) => !v)}
                 style={{
-                  display: "flex", alignItems: "center", gap: 6,
-                  background: showWatchlist ? "rgba(59,130,246,0.12)" : "hsl(222 40% 10%)",
-                  border: showWatchlist ? "1px solid rgba(59,130,246,0.3)" : "1px solid hsl(222 30% 18%)",
-                  color: showWatchlist ? "hsl(217 91% 60%)" : "hsl(215 20% 70%)",
-                  borderRadius: 10, padding: "7px 14px", fontSize: 13, fontWeight: 500,
-                  cursor: "pointer", fontFamily: "inherit", transition: "all 0.15s",
+                  display: "flex", alignItems: "center", gap: 7,
+                  background: showWatchlist ? "rgba(59,130,246,0.14)" : "rgba(255,255,255,0.04)",
+                  border: showWatchlist ? "1px solid rgba(59,130,246,0.35)" : "1px solid rgba(255,255,255,0.08)",
+                  color: showWatchlist ? "hsl(217 91% 68%)" : "hsl(215 20% 72%)",
+                  borderRadius: 10, padding: "7px 16px", fontSize: 13, fontWeight: 500,
+                  cursor: "pointer", fontFamily: "inherit",
+                  transition: "background 0.2s, border-color 0.2s, color 0.2s",
+                  letterSpacing: "0.01em",
+                }}
+                onMouseEnter={(e) => {
+                  if (!showWatchlist) {
+                    const el = e.currentTarget;
+                    el.style.background = "rgba(255,255,255,0.07)";
+                    el.style.borderColor = "rgba(255,255,255,0.14)";
+                    el.style.color = "hsl(210 40% 90%)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!showWatchlist) {
+                    const el = e.currentTarget;
+                    el.style.background = "rgba(255,255,255,0.04)";
+                    el.style.borderColor = "rgba(255,255,255,0.08)";
+                    el.style.color = "hsl(215 20% 72%)";
+                  }
                 }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill={showWatchlist ? "hsl(217 91% 60%)" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="13" height="13" viewBox="0 0 24 24"
+                  fill={showWatchlist ? "hsl(217 91% 68%)" : "none"}
+                  stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
+                >
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                 </svg>
-                Takip Listesi {watchlist.length > 0 && <span style={{ background: "hsl(217 91% 60%)", color: "white", borderRadius: "50%", width: 18, height: 18, display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700 }}>{watchlist.length}</span>}
+                Takip Listesi
+                {watchlist.length > 0 && (
+                  <span style={{
+                    background: "hsl(217 91% 60%)", color: "white",
+                    borderRadius: 6, padding: "0 6px", height: 18,
+                    display: "inline-flex", alignItems: "center",
+                    fontSize: 11, fontWeight: 700, minWidth: 18, justifyContent: "center",
+                  }}>
+                    {watchlist.length}
+                  </span>
+                )}
               </button>
+            )}
+
+            {/* Divider */}
+            {isAuthenticated && (
+              <div style={{ width: 1, height: 24, background: "rgba(255,255,255,0.08)", flexShrink: 0 }} />
             )}
 
             {!authLoading && (
               isAuthenticated ? (
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  {user?.profileImageUrl ? (
-                    <img src={user.profileImageUrl} alt={userName ?? ""} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover" }} />
-                  ) : (
-                    <div style={{ width: 32, height: 32, borderRadius: "50%", background: "hsl(217 91% 60%)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700, color: "white" }}>
-                      {(userName ?? "K")[0].toUpperCase()}
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                    {user?.profileImageUrl ? (
+                      <img
+                        src={user.profileImageUrl}
+                        alt={userName ?? ""}
+                        style={{ width: 34, height: 34, borderRadius: "50%", objectFit: "cover", border: "2px solid rgba(59,130,246,0.3)" }}
+                      />
+                    ) : (
+                      <div style={{
+                        width: 34, height: 34, borderRadius: "50%",
+                        background: "linear-gradient(135deg, hsl(217 91% 55%), hsl(230 80% 65%))",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: 13, fontWeight: 700, color: "white",
+                        border: "2px solid rgba(59,130,246,0.2)",
+                        flexShrink: 0,
+                      }}>
+                        {(userName ?? "K")[0].toUpperCase()}
+                      </div>
+                    )}
+                    <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.3 }}>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: "hsl(210 40% 92%)", maxWidth: 110, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{userName}</span>
+                      <span style={{ fontSize: 10.5, color: "hsl(215 20% 46%)", letterSpacing: "0.03em" }}>Hesabim</span>
                     </div>
-                  )}
-                  <span style={{ fontSize: 13, color: "hsl(215 20% 70%)", maxWidth: 120, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{userName}</span>
+                  </div>
                   <button
                     onClick={logout}
-                    style={{ background: "hsl(222 40% 10%)", border: "1px solid hsl(222 30% 18%)", color: "hsl(215 20% 60%)", borderRadius: 8, padding: "6px 12px", fontSize: 12, cursor: "pointer", fontFamily: "inherit", transition: "all 0.15s" }}
-                    onMouseEnter={(e) => { const el = e.currentTarget; el.style.borderColor = "hsl(222 30% 28%)"; el.style.color = "hsl(210 40% 90%)"; }}
-                    onMouseLeave={(e) => { const el = e.currentTarget; el.style.borderColor = "hsl(222 30% 18%)"; el.style.color = "hsl(215 20% 60%)"; }}
+                    style={{
+                      background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
+                      color: "hsl(215 20% 58%)", borderRadius: 9, padding: "7px 13px",
+                      fontSize: 12, fontWeight: 500, cursor: "pointer", fontFamily: "inherit",
+                      transition: "all 0.2s", letterSpacing: "0.02em",
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget;
+                      el.style.background = "rgba(239,68,68,0.08)";
+                      el.style.borderColor = "rgba(239,68,68,0.25)";
+                      el.style.color = "#EF4444";
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget;
+                      el.style.background = "rgba(255,255,255,0.04)";
+                      el.style.borderColor = "rgba(255,255,255,0.08)";
+                      el.style.color = "hsl(215 20% 58%)";
+                    }}
                   >
                     Cikis
                   </button>
                 </div>
               ) : (
-                <div style={{ display: "flex", gap: 8 }}>
+                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                   <button
                     onClick={login}
-                    style={{ background: "hsl(222 40% 10%)", color: "hsl(210 40% 90%)", border: "1px solid hsl(222 30% 22%)", borderRadius: 10, padding: "8px 18px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s" }}
-                    onMouseEnter={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.borderColor = "hsl(217 91% 60%)"; el.style.color = "hsl(217 91% 65%)"; }}
-                    onMouseLeave={(e) => { const el = e.currentTarget as HTMLButtonElement; el.style.borderColor = "hsl(222 30% 22%)"; el.style.color = "hsl(210 40% 90%)"; }}
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: "hsl(215 20% 80%)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      borderRadius: 10, padding: "8px 20px",
+                      fontSize: 13, fontWeight: 500,
+                      cursor: "pointer", fontFamily: "inherit",
+                      transition: "all 0.2s", letterSpacing: "0.01em",
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLButtonElement;
+                      el.style.background = "rgba(255,255,255,0.08)";
+                      el.style.borderColor = "rgba(255,255,255,0.18)";
+                      el.style.color = "hsl(210 40% 95%)";
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLButtonElement;
+                      el.style.background = "rgba(255,255,255,0.04)";
+                      el.style.borderColor = "rgba(255,255,255,0.1)";
+                      el.style.color = "hsl(215 20% 80%)";
+                    }}
                   >
                     Giris Yap
                   </button>
                   <button
                     onClick={register}
-                    style={{ background: "hsl(217 91% 60%)", color: "white", border: "none", borderRadius: 10, padding: "8px 18px", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", transition: "background 0.2s" }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "hsl(217 91% 50%)"; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "hsl(217 91% 60%)"; }}
+                    style={{
+                      background: "linear-gradient(135deg, hsl(217 91% 58%), hsl(230 80% 62%))",
+                      color: "white", border: "none",
+                      borderRadius: 10, padding: "8px 20px",
+                      fontSize: 13, fontWeight: 600,
+                      cursor: "pointer", fontFamily: "inherit",
+                      transition: "opacity 0.2s, transform 0.15s",
+                      boxShadow: "0 2px 12px rgba(59,130,246,0.3)",
+                      letterSpacing: "0.01em",
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLButtonElement;
+                      el.style.opacity = "0.88";
+                      el.style.transform = "translateY(-1px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLButtonElement;
+                      el.style.opacity = "1";
+                      el.style.transform = "translateY(0)";
+                    }}
                   >
                     Kayit Ol
                   </button>
