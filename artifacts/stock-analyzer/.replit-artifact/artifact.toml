@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Hisse Analiz"
+version = "1.0.0"
+id = "artifacts/stock-analyzer"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18797
+
+[services.development]
+run = "pnpm --filter @workspace/stock-analyzer run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/stock-analyzer", "run", "build" ]
+publicDir = "artifacts/stock-analyzer/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18797"
+BASE_PATH = "/"
