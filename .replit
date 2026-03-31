@@ -24,8 +24,3 @@ expertMode = true
 [postMerge]
 path = "scripts/post-merge.sh"
 timeoutMs = 20000
-
-[userenv]
-
-[userenv.shared]
-VITE_FINNHUB_API_KEY = "d75vmd9r01qm4b7scgi0d75vmd9r01qm4b7scgig"
